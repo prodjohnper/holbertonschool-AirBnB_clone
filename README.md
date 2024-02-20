@@ -12,6 +12,8 @@
 
 This is our Airbnb clone project.
 
+`Info update pending...`
+
 ## Files
 
 - *`Authors`* - File that contains project authors.
@@ -22,9 +24,14 @@ This is our Airbnb clone project.
 ## Tests
 
 - *`test_base_model.py`* - Unittest for base_model.
-- 
 
 *Test files are saved in `test\test_models\`*
+
+## Console
+
+This is the main entry point to our command interpreter.
+
+`Info update pending...`
 
 ## Resources
 
