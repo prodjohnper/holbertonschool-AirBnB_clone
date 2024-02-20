@@ -4,17 +4,27 @@
 
 - [Description](#description)
 - [Files](#files)
+- [Tests](#tests)
 - [Resources](#resources)
 - [Credits](#credits)
 
 ## Description
 
-This is our Airbnb clone.
+This is our Airbnb clone project.
 
 ## Files
 
-- `Authors` - File that contains project authors.
-- `README.md` - File that contains project description.
+- *`Authors`* - File that contains project authors.
+- *`README.md`* - File that contains project description.
+- *`base_model.py`* - Class *`BaseModel`* that defines common attributes/methods for other classes.
+- *`console.py`* - Command interpreter entry point.
+
+## Tests
+
+- *`test_base_model.py`* - Unittest for base_model.
+- 
+
+*Test files are saved in `test\test_models\`*
 
 ## Resources
 
