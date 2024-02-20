@@ -28,6 +28,9 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def cmdloop(self):
+        '''
+            Handle EOF
+        '''
         try:
             super().cmdloop()
         except KeyboardInterrupt:
