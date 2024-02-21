@@ -21,6 +21,10 @@ class BaseModel:
         '''
         date_format = '%Y-%m-%dT%H:%M:%S.%f'
 
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.datetime.now()
+        self.updated_at = self.created_at
+
         if kwargs:
             kwargs.pop('__class__', None)  # Remove __class__ from kwargs
             for key, value in kwargs.items():
@@ -30,9 +34,6 @@ class BaseModel:
                 else:
                     setattr(self, key, value)
         else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.datetime.now()
-            self.updated_at = self.created_at
             storage.new(self)
 
     def save(self):
