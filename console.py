@@ -138,15 +138,15 @@ class HBNBCommand(cmd.Cmd):
             Prints all string representation of all instances
         '''
         args = arg.split()
-        if len(args) == 0:
-            print([str(obj) for obj in BaseModel.__subclasses__()])
-            return
-        if args[0] != "BaseModel":
+        if len(args) == 1 and args[0] == 'BaseModel':
+            with open('file.json', 'r') as file:
+                my_dict_from_json = json.load(file)
+                for key, dictionary in my_dict_from_json.items():
+                    obj = BaseModel(**dictionary)
+                    print(obj)
+        else:
             print("** class doesn't exist **")
-            return
-        objs = self.all()
-        print([str(obj)
-            for obj in objs.values() if type(obj).__name__ == args[0]])
+        """ objs = self.all() """
 
     def do_update(self, arg):
         '''
