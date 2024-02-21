@@ -8,7 +8,7 @@
 
 import uuid
 import datetime
-
+from models import storage
 
 class BaseModel:
     '''
@@ -33,12 +33,14 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.datetime.now()
             self.updated_at = self.created_at
+            storage.new(self)
 
     def save(self):
         '''
             Update timestamp to the current date and time
         '''
         self.updated_at = datetime.datetime.now()
+        storage.save()
 
     def __str__(self):
         '''
