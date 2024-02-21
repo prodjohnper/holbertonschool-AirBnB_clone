@@ -29,4 +29,4 @@ class FileStorage:
             with open(FileStorage.__file_path, "r") as file:
                 FileStorage.__objects = json.load(file)
         except FileNotFoundError:
-            pass
+            return
