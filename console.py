@@ -7,6 +7,7 @@
 import cmd
 import json
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -14,6 +15,13 @@ class HBNBCommand(cmd.Cmd):
         Command interpreter
     '''
     prompt = '(hbnb) '
+
+    def __init__(self):
+        '''
+            comment
+        '''
+        super().__init__()
+        self._HBNBCommand = FileStorage()
 
     def do_quit(self, arg):
         '''
@@ -25,6 +33,7 @@ class HBNBCommand(cmd.Cmd):
         '''
             Exit program with EOF (Ctrl + D)
         '''
+        print()
         return True
 
     def cmdloop(self):
@@ -34,6 +43,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             super().cmdloop()
         except KeyboardInterrupt:
+            print()
             return True
 
     def emptyline(self):
@@ -120,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
         else:
             del objs[key]
-            with open(self.file_path, 'w') as file:
+            with open('file.json', 'w') as file:
                 json.dump(objs, file)
 
     def do_all(self, arg):
@@ -165,7 +175,7 @@ class HBNBCommand(cmd.Cmd):
             return
         obj = objs[key]
         setattr(obj, args[2], args[3])
-        with open(self.file_path, 'w') as file:
+        with open('file.json', 'w') as file:
             json.dump(objs, file)
 
 
