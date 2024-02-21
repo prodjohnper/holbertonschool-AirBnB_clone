@@ -22,7 +22,7 @@ class BaseModel:
         date_format = '%Y-%m-%dT%H:%M:%S.%f'
 
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.datetime.now()
+        self.created_at = datetime.datetime.today()
         self.updated_at = self.created_at
 
         if kwargs:
@@ -40,7 +40,7 @@ class BaseModel:
         '''
             Update timestamp to the current date and time
         '''
-        self.updated_at = datetime.datetime.now()
+        self.updated_at = datetime.datetime.today()
         storage.save()
 
     def __str__(self):
