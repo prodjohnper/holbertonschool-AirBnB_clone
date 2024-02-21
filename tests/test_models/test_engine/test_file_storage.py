@@ -15,13 +15,10 @@ class TestFileStorage(unittest.TestCase):
         self.model = BaseModel()
 
     def test_file_path(self):
-        __file_path = "file.json"
-        self.assertEqual(__file_path, "file.json")
+        self.assertEqual(FileStorage._FileStorage__file_path, "file.json")
 
     def test_objects(self):
-        __objects = {}
-        self.assertEqual(__objects, {})
-
+        self.assertIsInstance(FileStorage._FileStorage__objects, dict)
     def test_all(self):
         all_objects = self.storage.all()
         self.assertIsInstance(all_objects, dict)
