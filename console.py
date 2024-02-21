@@ -7,7 +7,6 @@
 import cmd
 import json
 from models.base_model import BaseModel
-from models.engine.file_storage import FileStorage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -15,13 +14,6 @@ class HBNBCommand(cmd.Cmd):
         Command interpreter
     '''
     prompt = '(hbnb) '
-
-    def __init__(self):
-        '''
-            comment
-        '''
-        super().__init__()
-        self._HBNBCommand = FileStorage()
 
     def do_quit(self, arg):
         '''
@@ -33,7 +25,6 @@ class HBNBCommand(cmd.Cmd):
         '''
             Exit program with EOF (Ctrl + D)
         '''
-        print()
         return True
 
     def cmdloop(self):
@@ -43,7 +34,6 @@ class HBNBCommand(cmd.Cmd):
         try:
             super().cmdloop()
         except KeyboardInterrupt:
-            print()
             return True
 
     def emptyline(self):
@@ -149,34 +139,33 @@ class HBNBCommand(cmd.Cmd):
         """ objs = self.all() """
 
     def do_update(self, arg):
-        '''
-            Updates an instance based on the class name and id
-        '''
         args = arg.split()
-        if len(args) == 0:
-            print("** class name missing **")
+        if len(args) < 4:
+            print("** Usage: update <class name> <id> <attribute name> <attribute value>")
             return
-        if args[0] != "BaseModel":
-            print("** class doesn't exist **")
-            return
-        if len(args) == 1:
-            print("** instance id missing **")
-            return
-        if len(args) == 2:
-            print("** attribute name missing **")
-            return
-        if len(args) == 3:
-            print("** value missing **")
-            return
-        objs = self.all()
-        key = args[0] + "." + args[1]
-        if key not in objs:
+
+        class_name = args[0]
+        obj_id = args[1]
+        attr_name = args[2]
+        attr_value = " ".join(args[3:])  # Handle attribute value with spaces
+
+        try:
+            with open("file.json", "r") as file:
+                data = json.load(file)
+        except FileNotFoundError:
             print("** no instance found **")
             return
-        obj = objs[key]
-        setattr(obj, args[2], args[3])
-        with open('file.json', 'w') as file:
-            json.dump(objs, file)
+
+        key = f"{class_name}.{obj_id}"
+        if key not in data:
+            print("** no instance found **")
+            return
+
+        obj_dict = data[key]
+        obj_dict[attr_name] = attr_value  # Update attribute in the dictionary
+
+        with open("file.json", "w") as file:
+            json.dump(data, file)
 
 
 if __name__ == '__main__':
