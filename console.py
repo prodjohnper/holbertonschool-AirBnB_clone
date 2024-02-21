@@ -57,6 +57,18 @@ class HBNBCommand(cmd.Cmd):
         except NameError:
             print("** class doesn't exist **")
 
+    def all(self):
+        '''
+            Returns the dictionary representation of all objects
+        '''
+        objs_dict = {}
+        try:
+            with open('file.json', 'r') as file:
+                objs_dict = json.load(file)
+        except FileNotFoundError:
+            pass
+        return objs_dict
+
     def do_show(self, arg):
         '''
             Prints the string representation of an instance
@@ -65,18 +77,28 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return
-        if args[0] not in BaseModel.__subclasses__():
+        if args[0] != "BaseModel":
             print("** class doesn't exist **")
             return
         if len(args) == 1:
             print("** instance id missing **")
             return
-        objs = self.all()
+
+        # Load data from JSON file
+        try:
+            with open("file.json", "r") as file:
+                data = json.load(file)
+        except FileNotFoundError:
+            print("** no instance found **")
+            return
+
         key = args[0] + "." + args[1]
-        if key not in objs:
+        if key not in data:
             print("** no instance found **")
         else:
-            print(objs[key])
+            instance_dict = data[key]
+            instance = BaseModel(**instance_dict)
+            print(instance)
 
     def do_destroy(self, arg):
         '''
@@ -86,7 +108,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return
-        if args[0] not in BaseModel.__subclasses__():
+        if args[0] != "BaseModel":
             print("** class doesn't exist **")
             return
         if len(args) == 1:
@@ -109,12 +131,12 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print([str(obj) for obj in BaseModel.__subclasses__()])
             return
-        if args[0] not in BaseModel.__subclasses__():
+        if args[0] != "BaseModel":
             print("** class doesn't exist **")
             return
         objs = self.all()
         print([str(obj)
-              for obj in objs.values() if type(obj).__name__ == args[0]])
+            for obj in objs.values() if type(obj).__name__ == args[0]])
 
     def do_update(self, arg):
         '''
@@ -124,7 +146,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return
-        if args[0] not in BaseModel.__subclasses__():
+        if args[0] != "BaseModel":
             print("** class doesn't exist **")
             return
         if len(args) == 1:
