@@ -140,14 +140,24 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         args = arg.split()
-        if len(args) < 4:
-            print("** Usage: update <class name> <id> <attribute name> <attribute value>")
+        args = args[:4]  # Ensure only first 4 arguments are used
+
+        """ if len(args) > 4:
+            return """
+
+        if len(args) == 0:
+            print('** class name missing **')
+            return
+        class_name = args[0]
+
+        if class_name != 'BaseModel':
+            print("** class doesn't exist **")
             return
 
-        class_name = args[0]
+        if len(args) < 2:
+            print('** instance id missing **')
+            return
         obj_id = args[1]
-        attr_name = args[2]
-        attr_value = " ".join(args[3:])  # Handle attribute value with spaces
 
         try:
             with open("file.json", "r") as file:
@@ -160,6 +170,17 @@ class HBNBCommand(cmd.Cmd):
         if key not in data:
             print("** no instance found **")
             return
+
+        if len(args) < 3:
+            print("** attribute name missing **")
+            return
+        attr_name = args[2]
+
+        if len(args) < 4:
+            print('** value missing **')
+            return
+
+        attr_value = " ".join(args[3:])  # Handle attribute value with spaces
 
         obj_dict = data[key]
         obj_dict[attr_name] = attr_value  # Update attribute in the dictionary
