@@ -153,7 +153,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         '''
-        Updates an instance based on the class name and id
+            Updates an instance based on the class name and id
         '''
         args = arg.split()
         if len(args) < 2:
@@ -198,6 +198,10 @@ class HBNBCommand(cmd.Cmd):
         # Save the changes back to the JSON file
         with open('file.json', 'w') as file:
             json.dump(objs, file)
+
+        # Print the string representation of the updated User object
+        updated_user = User(**objs[key])
+        print(updated_user)
 
 
 if __name__ == '__main__':
