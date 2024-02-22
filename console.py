@@ -124,19 +124,27 @@ class HBNBCommand(cmd.Cmd):
                 json.dump(objs, file)
 
     def do_all(self, arg):
-        '''
-            Prints all string representation of all instances
-        '''
-        args = arg.split()
-        if len(args) == 1 and args[0] == 'BaseModel':
+        if not arg:  # If no argument provided, print all instances
             with open('file.json', 'r') as file:
                 my_dict_from_json = json.load(file)
                 for key, dictionary in my_dict_from_json.items():
-                    obj_id = key.split('.')[1]
-                    obj = BaseModel(**dictionary)
+                    class_name, obj_id = key.split('.')
+                    obj = eval(class_name)(**dictionary)
                     print("[{}] {}".format(obj_id, obj))
         else:
-            print("** class doesn't exist **")
+            args = arg.split()
+            if len(args) == 1:
+                class_name = args[0]
+                if class_name in "BaseModel":
+                    with open('file.json', 'r') as file:
+                        my_dict_from_json = json.load(file)
+                        for key, dictionary in my_dict_from_json.items():
+                            if key.startswith(class_name):
+                                obj_id = key.split('.')[1]
+                                obj = eval(class_name)(**dictionary)
+                                print("[{}] {}".format(obj_id, obj))
+                else:
+                    print("** class doesn't exist **")
         """ objs = self.all() """
 
     def do_update(self, arg):
