@@ -18,4 +18,4 @@ class User(BaseModel):
         '''
             String representation of User object
         '''
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.email)
