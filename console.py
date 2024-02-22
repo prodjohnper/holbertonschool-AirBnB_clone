@@ -152,56 +152,50 @@ class HBNBCommand(cmd.Cmd):
                     print("** class doesn't exist **")
 
     def do_update(self, arg):
-        '''
-            Updates an instance based on the class name and id
-        '''
         args = arg.split()
-        if len(args) < 2:
-            print("** class name missing **")
+        args = args[:4]  # Ensure only first 4 arguments are used
+
+        if len(args) == 0:
+            print('** class name missing **')
             return
         class_name = args[0]
-        if class_name != "User":
+
+        if class_name != 'User':
             print("** class doesn't exist **")
             return
-        if len(args) < 3:
-            print("** instance id missing **")
+
+        if len(args) < 2:
+            print('** instance id missing **')
             return
         obj_id = args[1]
 
-        # Load the objects from the JSON file
         try:
-            with open('file.json', 'r') as file:
-                objs = json.load(file)
+            with open("file.json", "r") as file:
+                data = json.load(file)
         except FileNotFoundError:
-            objs = {}
-
+            print("** no instance found **")
+            return
         key = f"{class_name}.{obj_id}"
-        if key not in objs:
+
+        if key not in data:
             print("** no instance found **")
             return
 
-        # Check if the object is an instance of User
-        if objs[key]["__class__"] != "User":
-            print("** Invalid instance **")
-            return
-
-        # Check if attribute name and value are provided
-        if len(args) < 4:
+        if len(args) < 3:
             print("** attribute name missing **")
             return
         attr_name = args[2]
-        attr_value = args[3]
 
-        # Update attribute if it exists
-        objs[key][attr_name] = attr_value
+        if len(args) < 4:
+            print('** value missing **')
+            return
 
-        # Save the changes back to the JSON file
-        with open('file.json', 'w') as file:
-            json.dump(objs, file)
+        attr_value = " ".join(args[3:])  # Handle attribute value with spaces
+        obj_dict = data[key]
+        obj_dict[attr_name] = attr_value  # Update attribute in the dictionary
 
-        # Print the string representation of the updated User object
-        updated_user = User(**objs[key])
-        print(updated_user)
+        with open("file.json", "w") as file:
+            json.dump(data, file)
 
 
 if __name__ == '__main__':
