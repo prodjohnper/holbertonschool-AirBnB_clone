@@ -78,8 +78,9 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         if args[0] != "BaseModel":
-            print("** class doesn't exist **")
-            return
+            if args[0] != "User":
+                print("** class doesn't exist **")
+                return
         if len(args) == 1:
             print("** instance id missing **")
             return
@@ -109,8 +110,9 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         if args[0] != "BaseModel":
-            print("** class doesn't exist **")
-            return
+            if args[0] != "User":
+                print("** class doesn't exist **")
+                return
         if len(args) == 1:
             print("** instance id missing **")
             return
@@ -135,7 +137,7 @@ class HBNBCommand(cmd.Cmd):
             args = arg.split()
             if len(args) == 1:
                 class_name = args[0]
-                if class_name in "BaseModel":
+                if class_name in ["BaseModel", "User"]:
                     with open('file.json', 'r') as file:
                         my_dict_from_json = json.load(file)
                         for key, dictionary in my_dict_from_json.items():
@@ -159,9 +161,10 @@ class HBNBCommand(cmd.Cmd):
             return
         class_name = args[0]
 
-        if class_name != 'BaseModel':
-            print("** class doesn't exist **")
-            return
+        if class_name != "BaseModel":
+            if args[0] != "User":
+                print("** class doesn't exist **")
+                return
 
         if len(args) < 2:
             print('** instance id missing **')
