@@ -133,7 +133,7 @@ class HBNBCommand(cmd.Cmd):
                 my_dict_from_json = json.load(file)
                 for key, dictionary in my_dict_from_json.items():
                     obj = BaseModel(**dictionary)
-                    print(obj)
+                    print("[{}] {}".format(key.split('.')[1], obj))
         else:
             print("** class doesn't exist **")
         """ objs = self.all() """
