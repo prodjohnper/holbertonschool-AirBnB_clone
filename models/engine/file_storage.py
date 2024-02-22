@@ -29,11 +29,18 @@ class FileStorage:
 
     def reload(self): #Reloads objects from the JSON file.
         from models.base_model import BaseModel
+        from models.user import User
         try:
             with open(FileStorage.__file_path, "r") as file:
                 data = json.load(file)
                 for key, value in data.items():
-                    cls = BaseModel
+                    class_name = value["__class__"]
+                    if class_name == "BaseModel":
+                        cls = BaseModel
+                    elif class_name == "User":
+                        cls = User
+                    else:
+                        continue
                     obj = cls(**value)
                     FileStorage.__objects[key] = obj
         except FileNotFoundError:
