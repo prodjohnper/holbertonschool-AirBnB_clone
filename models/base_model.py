@@ -48,7 +48,7 @@ class BaseModel:
         '''
             Returns string representation
         '''
-        return f"[{type(self).__name__}] ({self.id}) {self.__dict__}"
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def to_dict(self):
         '''
@@ -57,6 +57,6 @@ class BaseModel:
         my_dict = self.__dict__.copy()
         my_dict['created_at'] = self.created_at.isoformat()
         my_dict['updated_at'] = self.updated_at.isoformat()
-        my_dict['__class__'] = type(self).__name__  # Add class name to dict
+        my_dict['__class__'] = self.__class__.__name__  # Add class name to dict
 
         return my_dict
