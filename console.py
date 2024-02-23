@@ -102,7 +102,7 @@ class HBNBCommand(cmd.Cmd):
         '''
             Deletes a User instance based on the id
         '''
-        args = arg.split()
+        args = shlex.split(arg)
         if not args:
             print("** class name missing **")
             return
@@ -115,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         user_id = args[1]
-        objs = self.all()
+        objs = shlex.all(arg)
         key = class_name + "." + user_id
         if key not in objs:
             print("** no instance found **")
@@ -138,7 +138,7 @@ class HBNBCommand(cmd.Cmd):
                         obj = User(**dictionary)
                         print(obj)
         else:
-            args = arg.split()
+            args = shlex.split(arg)
             if len(args) == 1:
                 class_name = args[0]
                 if class_name == "User":
