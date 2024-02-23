@@ -102,7 +102,7 @@ class HBNBCommand(cmd.Cmd):
         '''
             Deletes a User instance based on the id
         '''
-        args = shlex.split(arg)
+        args = arg.split()
         if not args:
             print("** class name missing **")
             return
