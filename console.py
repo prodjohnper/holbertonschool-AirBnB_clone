@@ -6,6 +6,7 @@
 '''
 import cmd
 import json
+import shlex
 from models.user import User
 
 
@@ -152,7 +153,7 @@ class HBNBCommand(cmd.Cmd):
                     print("** class doesn't exist **")
 
     def do_update(self, arg):
-        args = arg.split()
+        args = shlex.split(arg)
         args = args[:4]  # Ensure only first 4 arguments are used
 
         if len(args) == 0:
