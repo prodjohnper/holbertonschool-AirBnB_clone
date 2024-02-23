@@ -115,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         user_id = args[1]
-        objs = shlex.all(arg)
+        objs = self.all()
         key = class_name + "." + user_id
         if key not in objs:
             print("** no instance found **")
