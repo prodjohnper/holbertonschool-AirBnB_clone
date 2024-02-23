@@ -8,6 +8,8 @@ import cmd
 import json
 import shlex
 from models.user import User
+from models.base_model import BaseModel
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -53,13 +55,19 @@ class HBNBCommand(cmd.Cmd):
             return
         class_name = args[0]
 
-        if class_name != "User":
-            print("** class doesn't exist **")
-            return
+        # if class_name != "User":
+        #     print("** class doesn't exist **")
+        #     return
 
-        new_user = User()
-        new_user.save()
-        print(new_user.id)
+        if class_name == "BaseModel":
+            new_base = BaseModel()
+            new_base.save()
+            print(new_base.id)
+
+        if class_name == "User":
+            new_user = User()
+            new_user.save()
+            print(new_user.id)
 
     def all(self):
         '''
@@ -82,21 +90,28 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = args[0]
-        if class_name != "User":
-            print("** class doesn't exist **")
-            return
+        # if class_name != "User":
+        #     print("** class doesn't exist **")
+        #     return
         if len(args) < 2:
             print("** instance id missing **")
             return
 
-        user_id = args[1]
-        objs = self.all()
-        key = class_name + "." + user_id
+        if class_name == "BaseModel":
+            Base_id = args[1]
+            objs = self.all()
+            key = class_name + "." + Base_id
+
+        if class_name == "User":
+            user_id = args[1]
+            objs = self.all()
+            key = class_name + "." + user_id
+
         if key not in objs:
             print("** no instance found **")
             return
 
-        print(objs[key])
+        print(f"[{args[0]}] ({args[1]}) {objs[key]}")
 
     def do_destroy(self, arg):
         '''
@@ -197,6 +212,7 @@ class HBNBCommand(cmd.Cmd):
 
         with open("file.json", "w") as file:
             json.dump(data, file)
+        self.do_all()
 
 
 if __name__ == '__main__':
