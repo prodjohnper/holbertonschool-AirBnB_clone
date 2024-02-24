@@ -8,6 +8,11 @@ import cmd
 import json
 import shlex
 from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
 from models.base_model import BaseModel
 from models import storage
 
@@ -69,6 +74,31 @@ class HBNBCommand(cmd.Cmd):
             new_user.save()
             print(new_user.id)
 
+        if class_name == "Amenity":
+            new_user = Amenity()
+            new_user.save()
+            print(new_user.id)
+
+        if class_name == "City":
+            new_user = City()
+            new_user.save()
+            print(new_user.id)
+
+        if class_name == "Place":
+            new_user = Place()
+            new_user.save()
+            print(new_user.id)
+
+        if class_name == "Review":
+            new_user = Review()
+            new_user.save()
+            print(new_user.id)
+
+        if class_name == "State":
+            new_user = State()
+            new_user.save()
+            print(new_user.id)
+
     def all(self):
         '''
             Returns the dictionary representation of all objects
@@ -103,6 +133,31 @@ class HBNBCommand(cmd.Cmd):
             key = class_name + "." + Base_id
 
         if class_name == "User":
+            user_id = args[1]
+            objs = self.all()
+            key = class_name + "." + user_id
+
+        if class_name == "Amenity":
+            user_id = args[1]
+            objs = self.all()
+            key = class_name + "." + user_id
+
+        if class_name == "City":
+            user_id = args[1]
+            objs = self.all()
+            key = class_name + "." + user_id
+
+        if class_name == "Place":
+            user_id = args[1]
+            objs = self.all()
+            key = class_name + "." + user_id
+
+        if class_name == "Review":
+            user_id = args[1]
+            objs = self.all()
+            key = class_name + "." + user_id
+
+        if class_name == "State":
             user_id = args[1]
             objs = self.all()
             key = class_name + "." + user_id
@@ -149,7 +204,7 @@ class HBNBCommand(cmd.Cmd):
                 objs_dict = json.load(file)
                 for key, dictionary in objs_dict.items():
                     class_name, obj_id = key.split('.')
-                    if class_name in ["User", "BaseModel"]:
+                    if class_name in ['User', 'BaseModel', 'Amenity', 'City', 'Place', 'Review', 'State']:
                         obj_class = globals()[class_name]
                         obj = obj_class(**dictionary)
                         print(obj)
@@ -177,7 +232,7 @@ class HBNBCommand(cmd.Cmd):
             return
         class_name = args[0]
 
-        if class_name not in ['User', 'BaseModel']:
+        if class_name not in ['User', 'BaseModel', 'Amenity', 'City', 'Place', 'Review', 'State']:
             print("** class doesn't exist **")
             return
 
