@@ -212,7 +212,7 @@ class HBNBCommand(cmd.Cmd):
             args = shlex.split(arg)
             if len(args) == 1:
                 class_name = args[0]
-                if class_name in ["User", "BaseModel"]:
+                if class_name in ['User', 'BaseModel', 'Amenity', 'City', 'Place', 'Review', 'State']:
                     with open('file.json', 'r') as file:
                         data = json.load(file)
                         for key, value in data.items():
