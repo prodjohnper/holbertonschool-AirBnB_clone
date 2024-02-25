@@ -23,6 +23,16 @@ class HBNBCommand(cmd.Cmd):
     '''
     prompt = '(hbnb) '
 
+    my_classes = {
+        "BaseModel": BaseModel,
+        "User": User,
+        "Amenity": Amenity,
+        "City": City,
+        "Place": Place,
+        "Review": Review,
+        "State": State
+    }
+
     def do_quit(self, arg):
         '''
             Exit program
@@ -60,44 +70,13 @@ class HBNBCommand(cmd.Cmd):
             return
         class_name = args[0]
 
-        # if class_name != "User":
-        #     print("** class doesn't exist **")
-        #     return
+        if class_name not in self.my_classes:
+            print("** class doesn't exist **")
+            return
 
-        if class_name == "BaseModel":
-            new_base = BaseModel()
-            new_base.save()
-            print(new_base.id)
-
-        if class_name == "User":
-            new_user = User()
-            new_user.save()
-            print(new_user.id)
-
-        if class_name == "Amenity":
-            new_user = Amenity()
-            new_user.save()
-            print(new_user.id)
-
-        if class_name == "City":
-            new_user = City()
-            new_user.save()
-            print(new_user.id)
-
-        if class_name == "Place":
-            new_user = Place()
-            new_user.save()
-            print(new_user.id)
-
-        if class_name == "Review":
-            new_user = Review()
-            new_user.save()
-            print(new_user.id)
-
-        if class_name == "State":
-            new_user = State()
-            new_user.save()
-            print(new_user.id)
+        new_instance = self.my_classes[class_name]()
+        new_instance.save()
+        print(new_instance.id)
 
     def all(self):
         '''
@@ -120,53 +99,25 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = args[0]
-        # if class_name != "User":
-        #     print("** class doesn't exist **")
-        #     return
+
+        if class_name not in self.my_classes:
+            print("** class doesn't exist **")
+            return
+
         if len(args) < 2:
             print("** instance id missing **")
             return
 
-        if class_name == "BaseModel":
-            Base_id = args[1]
-            objs = self.all()
-            key = class_name + "." + Base_id
-
-        if class_name == "User":
-            user_id = args[1]
-            objs = self.all()
-            key = class_name + "." + user_id
-
-        if class_name == "Amenity":
-            user_id = args[1]
-            objs = self.all()
-            key = class_name + "." + user_id
-
-        if class_name == "City":
-            user_id = args[1]
-            objs = self.all()
-            key = class_name + "." + user_id
-
-        if class_name == "Place":
-            user_id = args[1]
-            objs = self.all()
-            key = class_name + "." + user_id
-
-        if class_name == "Review":
-            user_id = args[1]
-            objs = self.all()
-            key = class_name + "." + user_id
-
-        if class_name == "State":
-            user_id = args[1]
-            objs = self.all()
-            key = class_name + "." + user_id
+        obj_id = args[1]
+        objs = self.all()
+        key = f"{class_name}.{obj_id}"
 
         if key not in objs:
             print("** no instance found **")
             return
-        #print the string representation
-        print(f"[{args[0]}] ({args[1]}) {objs[key]}")
+
+        obj_instance = objs[key]
+        print(f"[{class_name}] ({obj_id}) {obj_instance}")
 
     def do_destroy(self, arg):
         '''
@@ -177,16 +128,18 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = args[0]
-        # if class_name != "User":
-        #     print("** class doesn't exist **")
-        #     return
+
+        if class_name not in self.my_classes:
+            print("** class doesn't exist **")
+            return
+
         if len(args) < 2:
             print("** instance id missing **")
             return
 
-        user_id = args[1]
+        obj_id = args[1]
         objs = self.all()
-        key = class_name + "." + user_id
+        key = f"{class_name}.{obj_id}"
         if key not in objs:
             print("** no instance found **")
             return
@@ -204,22 +157,21 @@ class HBNBCommand(cmd.Cmd):
                 objs_dict = json.load(file)
                 for key, dictionary in objs_dict.items():
                     class_name, obj_id = key.split('.')
-                    if class_name in ['User', 'BaseModel', 'Amenity', 'City', 'Place', 'Review', 'State']:
-                        obj_class = globals()[class_name]
+                    if class_name in self.my_classes:
+                        obj_class = self.my_classes[class_name]
                         obj = obj_class(**dictionary)
                         print(obj)
         else:
             args = shlex.split(arg)
             if len(args) == 1:
                 class_name = args[0]
-                if class_name in ["User", "BaseModel"]:
+                if class_name in self.my_classes:
                     with open('file.json', 'r') as file:
                         data = json.load(file)
                         for key, value in data.items():
                             if value["__class__"] == class_name:
                                 obj_repr = f"[{class_name}] ({key.split('.')[1]}) {value}"
                                 print(obj_repr)
-
                 else:
                     print("** class doesn't exist **")
 
@@ -232,7 +184,7 @@ class HBNBCommand(cmd.Cmd):
             return
         class_name = args[0]
 
-        if class_name not in ['User', 'BaseModel', 'Amenity', 'City', 'Place', 'Review', 'State']:
+        if class_name not in self.my_classes:
             print("** class doesn't exist **")
             return
 
@@ -261,20 +213,14 @@ class HBNBCommand(cmd.Cmd):
         if len(args) < 4:
             print('** value missing **')
             return
-
         attr_value = " ".join(args[3:])  # Handle attribute value with spaces
         obj_dict = data[key]
         obj_dict[attr_name] = attr_value  # Update attribute in the dictionary
-
         with open("file.json", "w") as file:
             json.dump(data, file)
-
-        # Construct the string representation
         obj_repr = f"[{class_name}] ({obj_id}) {obj_dict}"
-
-        # Save the string representation in file
         with open("updated_instances.txt", "a") as file:
-            file.write(obj_repr + "\n")
+            file.write(obj_repr)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
