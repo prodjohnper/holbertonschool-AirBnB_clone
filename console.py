@@ -90,6 +90,15 @@ class HBNBCommand(cmd.Cmd):
             pass
         return objs_dict
 
+    def default(self, arg):
+        args = arg.split(".")
+        if len(args) == 2 and args[1] == "all()":
+            class_name = args[0]
+            self.do_all(class_name)
+        else:
+            super().default(arg)
+
+
     def do_show(self, arg):
         '''
             Prints the string representation of a User instance
@@ -167,12 +176,13 @@ class HBNBCommand(cmd.Cmd):
                 class_name = args[0]
                 if class_name in self.my_classes:
                     with open('file.json', 'r') as file:
-                        data = json.load(file)
-                        for key, value in data.items():
-                            if value["__class__"] == class_name:
-                                obj_repr = f"[{class_name}]
-                                ({key.split('.')[1]}) {value}"
-                                print(obj_repr)
+                        objs_dict = json.load(file)
+                        for key, dictionary in objs_dict.items():
+                            class_name, obj_id = key.split('.')
+                            if class_name in self.my_classes:
+                                obj_class = self.my_classes[class_name]
+                                obj = obj_class(**dictionary)
+                                print(obj)
                 else:
                     print("** class doesn't exist **")
 
@@ -221,7 +231,7 @@ class HBNBCommand(cmd.Cmd):
             json.dump(data, file)
         obj_repr = f"[{class_name}] ({obj_id}) {obj_dict}"
         with open("updated_instances.txt", "a") as file:
-            file.write(obj_repr)
+            file.write(obj_repr + "\n")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
