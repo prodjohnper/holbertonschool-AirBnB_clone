@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 '''
     console.py
-    
+
     Description: Command interpreter entry point
 '''
 import cmd
@@ -165,7 +165,7 @@ class HBNBCommand(cmd.Cmd):
         if key not in objs:
             print("** no instance found **")
             return
-        #print the string representation
+        # Print str repr
         print(f"[{args[0]}] ({args[1]}) {objs[key]}")
 
     def do_destroy(self, arg):
@@ -204,7 +204,8 @@ class HBNBCommand(cmd.Cmd):
                 objs_dict = json.load(file)
                 for key, dictionary in objs_dict.items():
                     class_name, obj_id = key.split('.')
-                    if class_name in ['User', 'BaseModel', 'Amenity', 'City', 'Place', 'Review', 'State']:
+                    if class_name in ['User', 'BaseModel', 'Amenity',
+                                      'City', 'Place', 'Review', 'State']:
                         obj_class = globals()[class_name]
                         obj = obj_class(**dictionary)
                         print(obj)
@@ -212,12 +213,14 @@ class HBNBCommand(cmd.Cmd):
             args = shlex.split(arg)
             if len(args) == 1:
                 class_name = args[0]
-                if class_name in ['User', 'BaseModel', 'Amenity', 'City', 'Place', 'Review', 'State']:
+                if class_name in ['User', 'BaseModel', 'Amenity',
+                                  'City', 'Place', 'Review', 'State']:
                     with open('file.json', 'r') as file:
                         data = json.load(file)
                         for key, value in data.items():
                             if value["__class__"] == class_name:
-                                obj_repr = f"[{class_name}] ({key.split('.')[1]}) {value}"
+                                obj_repr = f"[{class_name}]
+                                ({key.split('.')[1]}) {value}"
                                 print(obj_repr)
 
                 else:
@@ -232,7 +235,8 @@ class HBNBCommand(cmd.Cmd):
             return
         class_name = args[0]
 
-        if class_name not in ['User', 'BaseModel', 'Amenity', 'City', 'Place', 'Review', 'State']:
+        if class_name not in ['User', 'BaseModel', 'Amenity',
+                              'City', 'Place', 'Review', 'State']:
             print("** class doesn't exist **")
             return
 
@@ -275,6 +279,7 @@ class HBNBCommand(cmd.Cmd):
         # Save the string representation in file
         with open("updated_instances.txt", "a") as file:
             file.write(obj_repr + "\n")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
