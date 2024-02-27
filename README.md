@@ -5,33 +5,49 @@
 - [Description](#description)
 - [Files](#files)
 - [Tests](#tests)
+- [Console](#console)
+- [Usage](#usage)
+- [Examples](#examples)
 - [Resources](#resources)
 - [Credits](#credits)
 
 ## Description
 
-This is our Airbnb clone project.
-
-`Info update pending...`
+This is our implementation of an Airbnb website. In this project we implemented a basic command interpreter interface
+and different data models such as Amenities, cities, users, etc.
 
 ## Files
 
 - *`Authors`* - File that contains project authors.
 - *`README.md`* - File that contains project description.
-- *`base_model.py`* - Class *`BaseModel`* that defines common attributes/methods for other classes.
+
+### Console
 - *`console.py`* - Command interpreter entry point.
+
+### Engine
+- *`file_storage.py`* - Class *`FileStorage`* that serializes instances to a JSON file and deserializes JSON file to instances
+
+### Models
+- *`amenity.py`* - Class *`Amenity`* that inherits from *BaseModel*.
+- *`base_model.py`* - Class *`BaseModel`* that defines common attributes/methods for other classes.
+- *`city.py`* - Class *`City`* that inherits from *BaseModel*.
+- *`place.py`* - Class *`Place`* that inherits from *BaseModel*.
+- *`review.py`* - Class *`Review`* that inherits from *BaseModel*.
+- *`state.py`* - Class *`State`* that inherits from *BaseModel*.
+- *`user.py`* - Class *`User`* that inherits from *BaseModel*.
 
 ## Tests
 
+- *`test_amenity.py`* - Unittest for amenity.
 - *`test_base_model.py`* - Unittest for base_model.
+- *`test_city.py`* - Unittest for city.
+- *`test_place.py`* - Unittest for place.
+- *`test_review.py`* - Unittest for review.
+- *`test_state.py`* - Unittest for state.
+- *`test_user.py`* - Unittest for user.
+- *`test_file_storage.py`* - Unittest for file_storage.
 
 *Test files are saved in `test\test_models\`*
-
-## Console
-
-This is the main entry point to our command interpreter.
-
-`Info update pending...`
 
 ## Resources
 
