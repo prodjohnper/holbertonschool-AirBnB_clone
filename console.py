@@ -95,6 +95,7 @@ class HBNBCommand(cmd.Cmd):
             "all()": self.do_all,
             "count()": self.do_count,
             "show()": self.do_show,
+            "destroy()": self.do_destroy,
         }
         args = arg.split(".")
         if len(args) == 2:
@@ -105,6 +106,9 @@ class HBNBCommand(cmd.Cmd):
             elif command.startswith("show(") and command.endswith(")"):
                 obj_id = command.split("(")[1].rstrip(")")
                 self.do_show(f"{class_name} {obj_id}")
+            elif command.startswith("destroy(") and command.endswith(")"):
+                obj_id = command.split("(")[1].rstrip(")")
+                self.do_destroy(f"{class_name} {obj_id}")
         else:
             super().default(arg)
 
@@ -147,6 +151,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = args[0]
+        obj_id = args[1]
 
         if class_name not in self.my_classes:
             print("** class doesn't exist **")
@@ -156,7 +161,6 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
 
-        obj_id = args[1]
         objs = self.all()
         key = f"{class_name}.{obj_id}"
         if key not in objs:
