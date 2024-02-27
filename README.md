@@ -90,6 +90,8 @@ update User 'user_id' attribute_name attribute_value
 quit
 ```
 
+---
+
 ## Resources
 
 - *[Cmd module](https://docs.python.org/3.4/library/cmd.html)*
