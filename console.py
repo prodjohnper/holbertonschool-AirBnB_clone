@@ -105,14 +105,16 @@ class HBNBCommand(cmd.Cmd):
             if args[1] in command_dict:
                 command_dict[args[1]](class_name)
             elif command.startswith("show(") and command.endswith(")"):
-                obj_id = command.split("(")[1].rstrip(")")
+                obj_id = command.split("(")[1][:-1]
                 self.do_show(f"{class_name} {obj_id}")
             elif command.startswith("destroy(") and command.endswith(")"):
-                obj_id = command.split("(")[1].rstrip(")")
+                obj_id = command.split("(")[1][:-1]
                 self.do_destroy(f"{class_name} {obj_id}")
             elif command.startswith("update(") and command.endswith(")"):
-                obj_id = command.split("(")[1].rstrip(")")
-                self.do_update(f"{class_name} {obj_id}")
+                args_update = command.split("(")[1][:-1].split(", ")
+                if len(args_update) == 3:
+                    obj_id, attr_name, attr_value = args_update
+                    self.do_update(f"{class_name} {obj_id} {attr_name} {attr_value}")
         else:
             super().default(arg)
 
