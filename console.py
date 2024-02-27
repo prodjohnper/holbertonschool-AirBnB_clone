@@ -91,10 +91,15 @@ class HBNBCommand(cmd.Cmd):
         return objs_dict
 
     def default(self, arg):
+        command_dict = {
+            "all()": self.do_all,
+            "count()": self.do_count,
+        }
         args = arg.split(".")
-        if len(args) == 2 and args[1] == "all()":
+        if len(args) == 2:
             class_name = args[0]
-            self.do_all(class_name)
+            if args[1] in command_dict:
+                command_dict[args[1]](class_name)
         else:
             super().default(arg)
 
@@ -232,6 +237,32 @@ class HBNBCommand(cmd.Cmd):
         obj_repr = f"[{class_name}] ({obj_id}) {obj_dict}"
         with open("updated_instances.txt", "a") as file:
             file.write(obj_repr + "\n")
+
+    def do_count(self, arg):
+        '''
+            Prints all string representations of User or BaseModel instances
+        '''
+        obj_class = []
+        if not arg:
+            with open('file.json', 'r') as file:
+                objs_dict = json.load(file)
+                for key, dictionary in objs_dict.items():
+                    class_name, obj_id = key.split('.')
+                    if class_name in self.my_classes:
+                        obj_class.append(class_name)
+            print(len(obj_class))
+        else:
+            class_name = arg
+            if class_name in self.my_classes:
+                with open('file.json', 'r') as file:
+                    objs_dict = json.load(file)
+                    for key, dictionary in objs_dict.items():
+                        args = key.split('.')
+                        if args[0] == class_name:
+                            obj_class.append(class_name)
+                print(len(obj_class))
+            else:
+                print("** class doesn't exist **")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
