@@ -49,6 +49,47 @@ and different data models such as Amenities, cities, users, etc.
 
 *Test files are saved in `test\test_models\`*
 
+## Console
+
+This is the main entry point to our command interpreter. To start the command interpreter, run this command:
+
+```c
+./console.py
+```
+
+## Usage
+The interpreter provides commands to interact with the page. The command syntax is the following:
+
+```c
+command model [argument_1 argument_2 ...]
+```
+
+## Examples
+Here are some eamples of the interpreter commands
+- Create a User:
+
+```c
+create User
+```
+
+- Display user (user_id is retrieved when creating the user):
+
+```c
+show User 'user_id'
+```
+
+- Update User:
+
+```c
+update User 'user_id' attribute_name attribute_value
+```
+
+- Close interpreter:
+
+```c
+quit
+```
+
 ## Resources
 
 - *[Cmd module](https://docs.python.org/3.4/library/cmd.html)*
