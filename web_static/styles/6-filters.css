@@ -1,120 +1,77 @@
 .container .filters {
-    display: flex;
-    height: 70px;
-    width: 100%;
-    background-color: white;
-    border: 1px solid #DDDDDD;
-    border-radius: 4px;
-    position: relative;
+  display: flex;
+  justify-content: stretch;
+  background-color: white;
+  height: 70px;
+  width: 100%;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px;
 }
 
 .filters button {
-    height: 48px;
-    width: 20%;
-    background-color: #FF5A5F;
-    color: #FFFFFF;
-    font-size: 18px;
-    border: none;
-    border-radius: 4px;
-    margin: auto 20px auto auto;
-    transition: opacity 0.3s ease;
+  position: relative;
+  height: 48px;
+  width: 20%;
+  background-color: #FF5A5F;
+  color: #FFFFFF;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
+  margin: auto 30px auto 0;
+  left: 24%;
 }
 
 .filters button:hover {
-    opacity: 0.9;
+  opacity: 0.9;
 }
 
 .locations {
-    height: 100%;
-    width: 25%;
-    border-right: #DDDDDD solid 1px;
+  height: 100%;
+  width: 25%;
+  padding-right: 3rem;
+  border-right: solid 1px #DDDDDD;
 }
 
-.locations,
 .amenities {
-    height: 100%;
-    width: 25%;
-    position: relative;
+  height: 100%;
+  width: 25%;
 }
 
 .filters .locations h3,
 .filters .amenities h3 {
-    font-weight: 600;
-    padding-left: 2rem;
-    position: relative;
+  font-weight: 600;
+  padding-left: 2rem;
 }
 
 .filters .locations h4,
 .filters .amenities h4 {
-    font-weight: 400;
-    font-size: 14px;
-    margin: -10px 0;
-    padding-left: 2rem;
-}
-
-.locations .state-list h2,
-.amenities .amenities-list h2 {
-    font-size: 16px;
-    margin-left: -5px;
-}
-
-.amenities .amenities-list li {
-    margin-top: 5px;
-    margin-left: -20px;
-}
-
-.locations .popover,
-.amenities .popover {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #FAFAFA;
-    width: 88%;
-    border: 1px solid #DDDDDD;
-    opacity: 0;
-    pointer-events: none;
-    padding: 10px 10px 10px 20px;
-    transition: opacity 0.15s ease;
+  font-weight: 400;
+  font-size: 14px;
+  margin-top: -5%;
+  padding-left: 2rem;
 }
 
 .locations:hover .popover,
 .amenities:hover .popover {
-    opacity: 1;
-    pointer-events: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.locations .popover li,
+.popover {
+  display: none;
+  list-style: none;
+  width: 100%;
+  background-color: #FAFAFA;
+  border: solid 1px #DDDDDD;
+  border-radius: 4px;
+  margin-top: -0.4rem;
+  padding-bottom: 1rem;
+}
+
+.popover h2 {
+  font-size: 16px;
+}
+
 .amenities .popover li {
-    list-style: none;
-    color: #333333;
-}
-
-.locations .state-list,
-.amenities .amenities-list {
-    padding-left: 20px;
-    /* padding-right: 15px; */
-}
-
-.locations .state-list h2,
-.amenities .amenities-list h2 {
-    font-size: 16px;
-    margin-left: 0;
-    margin-top: 5px;
-}
-
-.locations .state-list,
-.amenities .amenities-list {
-    padding-left: 20px;
-    margin-top: -10px;
-}
-
-.amenities .amenities-list li {
-    margin-left: 5px;
-    margin-top: 5px;
-}
-
-
-.locations .state-list li,
-.amenities .state-list li {
-    margin-top: 5px;
+  padding-top: 1rem;
 }
